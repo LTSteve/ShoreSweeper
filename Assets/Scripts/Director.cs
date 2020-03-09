@@ -40,9 +40,16 @@ public class Director : MonoBehaviour {
 
     private SaveFile saveFile;
 
+    public string testingFilename;
 
     public void Start()
     {
+        if(D != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         D = this;
 
         DontDestroyOnLoad(this.gameObject);
@@ -107,6 +114,12 @@ public class Director : MonoBehaviour {
     {
         if (!Loaded)
         {
+            if (!string.IsNullOrEmpty(testingFilename))
+            {
+                LoadGame(testingFilename);
+                testingFilename = null;
+            }
+
             return;
         }
 
@@ -354,6 +367,8 @@ public class Director : MonoBehaviour {
         //open loading screen
         LoadingView.Enable();
         LoadingView.Set(0f, "Loading Game Scene...");
+
+        transform.Find("Canvas/MainMenu").gameObject.SetActive(false);
 
         //async load level
         var operation = SceneManager.LoadSceneAsync(sceneIndex);

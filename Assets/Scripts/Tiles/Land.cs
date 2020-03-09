@@ -5,7 +5,7 @@ using UnityEngine;
 public class Land : Tile
 {
     public GameObject NumberRef;
-    public int number = 0;
+    public int number = 0; //great name for a variable, should be type (ie the land sprite type)
 
     public void Start()
     {
@@ -17,10 +17,18 @@ public class Land : Tile
 
     public override void Activate()
     {
-        if (Flaged || Shown)
+        if (Flaged)
         {
             return;
         }
+
+        if (Shown)
+        {
+            Parent.TryNeighborClearOf(location);
+
+            return;
+        }
+
         base.Activate();
 
         if (NumberRef != null)
@@ -34,6 +42,11 @@ public class Land : Tile
         {
             Parent.CheckIfIWon();
         }
+    }
+
+    private Tile[] _getNeighbors()
+    {
+        return new Tile[]{ };
     }
 
     public override void Clear()

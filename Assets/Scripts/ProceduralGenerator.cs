@@ -385,12 +385,26 @@ public class ProceduralGenerator : MonoBehaviour {
 
     public void UnfoldNeighborTilesOf(int location)
     {
+        var workingList = neighborsOf(location);
+
+        var startNew = !unfoldingList.Any();
+
+        unfoldingList.AddRange(workingList.Where(item => !unfoldingList.Contains(item)));
+
+        if (startNew)
+        {
+            StartCoroutine(UnfoldGap());
+        }
+    }
+
+    private List<Tile> neighborsOf(int location)
+    {
         var workingList = new List<Tile>();
 
         var x = location / 20;
         var y = location % 20;
 
-        for(var i = -1; i < 2; i++)
+        for (var i = -1; i < 2; i++)
         {
             if (x + i >= 20 || x + i < 0)
             {
@@ -405,17 +419,52 @@ public class ProceduralGenerator : MonoBehaviour {
                     continue;
                 }
 
-                workingList.Add(tileMap[x+i,y+j]);
+                workingList.Add(tileMap[x + i, y + j]);
             }
         }
 
-        var startNew = !unfoldingList.Any();
+        return workingList;
+    }
 
-        unfoldingList.AddRange(workingList.Where(item => !unfoldingList.Contains(item)));
+    public void TryNeighborClearOf(int location)
+    {
+        var neighbors = neighborsOf(location);
 
-        if (startNew)
+        var markedNeighbors = 0;
+        var mineNeighbors = 0;
+
+        var hiddenNeighbors = new List<Tile>();
+
+        foreach (var neighbor in neighbors)
         {
-            StartCoroutine(UnfoldGap());
+            if (!neighbor)
+            {
+                continue;
+            }
+
+            if (neighbor.Flaged)
+            {
+                markedNeighbors++;
+            }
+            
+            if(neighbor is Mine && !neighbor.Shown)
+            {
+                mineNeighbors++;
+            }
+
+            if (!neighbor.Flaged && !neighbor.Shown)
+            {
+                hiddenNeighbors.Add(neighbor);
+            }
+        }
+
+        if (markedNeighbors == mineNeighbors)
+        {
+            foreach (var neighbor in neighbors)
+            {
+                if(neighbor != null && !neighbor.Shown)
+                    neighbor.Activate();
+            }
         }
     }
 
