@@ -17,11 +17,15 @@ public static class SaveSystem
 
     public static SaveFile LoadZones(string playerName = "zones")
     {
-        var path = Application.persistentDataPath + "/" + playerName + ".sv";
-        if (File.Exists(path))
+        return LoadFile(Application.persistentDataPath + "/" + playerName + ".sv");
+    }
+
+    public static SaveFile LoadFile(string filePath)
+    {
+        if (File.Exists(filePath))
         {
             var formatter = new BinaryFormatter();
-            var stream = new FileStream(path, FileMode.Open);
+            var stream = new FileStream(filePath, FileMode.Open);
             var data = (SaveFile)formatter.Deserialize(stream);
             stream.Close();
 

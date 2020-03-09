@@ -339,10 +339,17 @@ public class Director : MonoBehaviour {
     {
         Loaded = false;
         
-        StartCoroutine(_startNewGame(0, newFile));
+        StartCoroutine(_startGame(0, newFile));
     }
 
-    private IEnumerator _startNewGame (int sceneIndex, SaveFile file)
+    public void LoadGame(string name)
+    {
+        Loaded = false;
+
+        StartCoroutine(_startGame(0, null, name));
+    }
+
+    private IEnumerator _startGame(int sceneIndex, SaveFile file = null, string loadingName = null)
     {
         //open loading screen
         LoadingView.Enable();
@@ -360,6 +367,6 @@ public class Director : MonoBehaviour {
 
         //generate level & close loading screen
 
-        yield return StartCoroutine(_loadAsync(file));
+        yield return StartCoroutine(_loadAsync(file, loadingName));
     }
 }
