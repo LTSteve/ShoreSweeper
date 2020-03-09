@@ -1,0 +1,120 @@
+{
+  "hull": [
+    {
+      "cost": 100,
+      "baseSpeed": 0,
+      "viewDistance": 6,
+      "mastCount": 1,
+      "defaultSails": [
+        0
+      ],
+      "wakeOffset": [
+        -0.25,
+        -0.15,
+        0
+      ]
+    },
+    {
+      "cost": 1000,
+      "baseSpeed": 0,
+      "viewDistance": 7,
+      "mastCount": 1,
+      "defaultSails": [
+        1
+      ],
+      "wakeOffset": [
+        -0.25,
+        -0.15,
+        0
+      ]
+    },
+    {
+      "cost": 5000,
+      "baseSpeed": 2,
+      "viewDistance": 8,
+      "mastCount": 1,
+      "defaultSails": [
+        2
+      ],
+      "wakeOffset": [
+        -0.25,
+        -1.05,
+        0
+      ]
+    },
+    {
+      "cost": 20000,
+      "baseSpeed": 0,
+      "viewDistance": 10,
+      "mastCount": 2,
+      "defaultSails": [
+        3,
+        4
+      ],
+      "wakeOffset": [
+        -0.6,
+        -2,
+        0
+      ]
+    },
+    {
+      "cost": 100000,
+      "baseSpeed": 0,
+      "viewDistance": 11,
+      "mastCount": 3,
+      "defaultSails": [
+        2,
+        5,
+        2
+      ],
+      "wakeOffset": [
+        -1.5,
+        -1,
+        0
+      ]
+    }
+  ],
+  "sail": [
+    {
+      "cost": 100,
+      "speed": 1.5,
+      "shipMastBannedMap": []
+    },
+    {
+      "cost": 1500,
+      "speed": 2.5,
+      "shipMastBannedMap": []
+    },
+    {
+      "cost": 1500,
+      "speed": 2,
+      "shipMastBannedMap": []
+    },
+    {
+      "cost": 4500,
+      "speed": 3,
+      "shipMastBannedMap": [
+        [ 0, 0 ],
+        [ 1, 0 ],
+        [ 3, 1 ],
+        [ 4, 0, 2 ]
+      ]
+    },
+    {
+      "cost": 2500,
+      "speed": 1,
+      "shipMastBannedMap": [
+        [ 0, 0 ]
+      ]
+    },
+    {
+      "cost": 10000,
+      "speed": 4,
+      "shipMastBannedMap": [
+        [ 0, 0 ],
+        [ 1, 0 ],
+        [ 3, 1 ]
+      ]
+    }
+  ]
+}
