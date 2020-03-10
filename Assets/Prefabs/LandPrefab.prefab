@@ -199,10 +199,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb142f4a2921314e98734068bbe1848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Shown: 0
   Flaged: 0
-  NumberRef: {fileID: 0}
-  number: 0
   location: 0
   destroying: 0
   CoverRenderer: {fileID: 794937777}
   Parent: {fileID: 0}
+  Pop: {fileID: 3709135797594735363, guid: 3a065af79660183429ff35f5f1cada9b, type: 3}
+  NumberRef: {fileID: 0}
+  number: 0

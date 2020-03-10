@@ -83,6 +83,8 @@ public class Mine : Tile
         }
 
         CoverRenderer.sprite = null;
+
+        Instantiate(Pop);
     }
 
     private IEnumerator _shakening()

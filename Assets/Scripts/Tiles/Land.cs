@@ -95,5 +95,7 @@ public class Land : Tile
 
         CoverRenderer.sprite = null;
         Destroy(numberRenderer.gameObject);
+
+        Instantiate(Pop);
     }
 }

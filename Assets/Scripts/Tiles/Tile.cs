@@ -12,6 +12,8 @@ public class Tile : MonoBehaviour
     public SpriteRenderer CoverRenderer;
     public ProceduralGenerator Parent;
 
+    public Transform Pop;
+
     private Sprite CoverSprite;
     
     public void SetParent(ProceduralGenerator parent)

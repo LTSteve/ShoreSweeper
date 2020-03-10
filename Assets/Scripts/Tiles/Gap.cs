@@ -59,5 +59,7 @@ public class Gap : Tile {
         }
 
         Destroy(this.gameObject);
+
+        Instantiate(Pop, transform.position, Quaternion.identity);
     }
 }
