@@ -8,6 +8,6 @@ public class SaveButton : MonoBehaviour
 
     public void Click()
     {
-        transform.parent.parent.GetComponent<LoadGameView>().SelectRow(this);
+        transform.parent.parent.parent.parent.GetComponent<LoadGameView>().SelectRow(this);
     }
 }

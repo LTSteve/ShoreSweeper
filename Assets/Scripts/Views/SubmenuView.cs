@@ -15,7 +15,7 @@ public class SubmenuView : MonoBehaviour
     private bool initialized = false;
     private bool doOpen = false;
 
-    void Start()
+    protected void Start()
     {
         startingPos = transform.localPosition;
     }

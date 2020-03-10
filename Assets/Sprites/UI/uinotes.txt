@@ -1,0 +1,8 @@
+panel titlebar	panel button		panel button (clicked)
+checkbox	menu button		menu button (clicked)
+checkbox (ch)	menu exit button	menu exit button (clicked)
+bar full	panel button		panel button (clicked)
+bar empty
+panel
+input field
+scrollbar background

@@ -17,8 +17,9 @@ public class LoadGameView : SubmenuView
 
     private int selected = -1;
 
-    private void Start()
+    protected new void Start()
     {
+        base.Start();
         ClearView();
     }
 
@@ -34,8 +35,8 @@ public class LoadGameView : SubmenuView
 
     private void _addSaveRow(SaveFile save)
     {
-        var root = Instantiate(SaveRowPrefab, transform.Find("Layout"));
-        root.transform.localPosition = new Vector3(root.transform.localPosition.x, root.transform.localPosition.y - 70 * rowCount, root.transform.localPosition.z);
+        var root = Instantiate(SaveRowPrefab, transform.Find("Scroll View/Viewport/Content"));
+        //root.transform.localPosition = new Vector3(root.transform.localPosition.x, root.transform.localPosition.y - 170 * rowCount, root.transform.localPosition.z);
         root.Index = rowCount;
         files.Add(save.playerName);
         rowCount++;
@@ -48,7 +49,7 @@ public class LoadGameView : SubmenuView
 
     public override void ClearView()
     {
-        foreach(Transform child in transform.Find("Layout"))
+        foreach(Transform child in transform.Find("Scroll View/Viewport/Content"))
         {
             Destroy(child.gameObject);
         }
