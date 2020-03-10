@@ -3,7 +3,7 @@ guid: 4937f4d0bf282d34c8b5bdb6a7f64898
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 120
+  fontSize: 100
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
@@ -13,7 +13,7 @@ TrueTypeFontImporter:
   - Perfect DOS VGA 437 Win
   fallbackFontReferences: []
   customCharacters: 
-  fontRenderingMode: 3
+  fontRenderingMode: 0
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
   shouldRoundAdvanceValue: 1
