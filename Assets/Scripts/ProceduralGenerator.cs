@@ -11,6 +11,7 @@ public class ProceduralGenerator : MonoBehaviour {
     public Tile LandPrefab;
     public Tile GapPrefab;
     public GameObject NumberPrefab;
+    public TreeBit TreePrefab;
 
     public Sprite[] LandSprites;
     public Sprite[] NumberSprites;
@@ -29,6 +30,7 @@ public class ProceduralGenerator : MonoBehaviour {
     private Numberizer coordinates;
 
     private List<Tile> tiles = new List<Tile>();
+    private List<IslandBit> bits = new List<IslandBit>();
     private Tile[,] tileMap = new Tile[20, 20];
 
     public ZoneData zoneData;
@@ -98,6 +100,23 @@ public class ProceduralGenerator : MonoBehaviour {
 
         yield return null;
 
+        //reshuffle spots for entity placement
+        for (var i = 0; i < 400; i++)
+        {
+            var spotChosen = coordinates.GetNumeral(400);
+            var temp = availableSpots[i];
+            availableSpots[i] = availableSpots[spotChosen];
+            availableSpots[spotChosen] = temp;
+        }
+
+        //pick tree spots
+        var treeCount = (int)(Mathf.Pow(CurrentDifficulty, 2f) / 1.1f) * (coordinates.GetNumeral() * 0.1f + 0.1f) + 20;
+        var treeSpots = new List<int>();
+        for(var i = 0; i < treeCount; i++)
+        {
+            treeSpots.Add(availableSpots[i]);
+        }
+
         //reset spots
         availableSpots.Clear();
         for (var i = 0; i < 400; i++)
@@ -166,6 +185,11 @@ public class ProceduralGenerator : MonoBehaviour {
             }
 
             _spawnLand((i / 20) - 10, (i % 20) - 10, tileType, adjacent - 1, data.IsCleared(i), completelyCleared);
+
+            if (treeSpots.Contains(i))
+            {
+                _spawnTree((i / 20) - 10, (i % 20) - 10, completelyCleared);
+            }
         }
     }
 
@@ -258,6 +282,22 @@ public class ProceduralGenerator : MonoBehaviour {
 
         tiles.Add(spawned);
         tileMap[x + 10, y + 10] = spawned;
+    }
+
+    private void _spawnTree(int x, int y, bool cleared = false)
+    {
+        var spawned = Instantiate(TreePrefab, new Vector3(x, y) + LandRoot.position + IslandCenterOffset + new Vector3(0, 0, -15f), Quaternion.identity, LandRoot);
+
+        spawned.SetParent(this);
+
+        if (cleared)
+        {
+            spawned.Show();
+        }
+
+        spawned.location = (x + 10) * 20 + y + 10;
+
+        bits.Add(spawned);
     }
 
     private void _spawnMine(int x, int y, bool partlyCleared = false, bool cleared = false)
@@ -375,6 +415,12 @@ public class ProceduralGenerator : MonoBehaviour {
         {
             if(tile != null && tile.gameObject != null)
                 tile.Clear();
+        }
+
+        foreach(var bit in bits)
+        {
+            if(bit != null && bit.gameObject != null)
+                bit.Show();
         }
 
         //grant extra points on perfect clear

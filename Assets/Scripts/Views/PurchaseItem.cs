@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//DEPRECATED
+
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 

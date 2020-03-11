@@ -54,6 +54,8 @@ MonoBehaviour:
     type: 3}
   NumberPrefab: {fileID: 1228519952281242, guid: a82de50aac83afb4bbd3667f56e9c689,
     type: 3}
+  TreePrefab: {fileID: -1690820636405074331, guid: 25143b1f77031854fa628055521bbd25,
+    type: 3}
   LandSprites:
   - {fileID: 21300008, guid: 21ba3c0396ae01245bf6054250fa1c0d, type: 3}
   - {fileID: 21300010, guid: 21ba3c0396ae01245bf6054250fa1c0d, type: 3}
@@ -77,11 +79,14 @@ MonoBehaviour:
   MineSprite: {fileID: 21300004, guid: 21ba3c0396ae01245bf6054250fa1c0d, type: 3}
   LandRoot: {fileID: 4632690520820152}
   SpritesRoot: {fileID: 4978537593027852}
+  IslandCenterOffset: {x: 0, y: 0, z: 0}
   CurrentDifficulty: 0
   Type: 0
+  Honked: 0
   zoneData:
     cleared: 0
     coordinates: 0
+    honked: 0
     ClearedTiles: 
     FlaggedTiles: 
 --- !u!1 &1023474701835648

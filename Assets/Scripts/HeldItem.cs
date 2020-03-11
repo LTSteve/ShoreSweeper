@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//DEPRECATED (partially, the number stuff is fine but the drag & drop is deprecated)
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;

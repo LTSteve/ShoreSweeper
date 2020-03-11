@@ -57,11 +57,6 @@ public class PlayerController : MonoBehaviour {
 
     public void Update()
     {
-        if(BuyView.Instance == null || BuyView.Instance.open)
-        {
-            return;
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             _raycastActivate();
