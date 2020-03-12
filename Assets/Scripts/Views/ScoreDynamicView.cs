@@ -57,6 +57,6 @@ public class ScoreDynamicView : MonoBehaviour {
 
     private void updateDisplay()
     {
-        myText.text = "Score: " + (int)(displayedValue);
+        myText.text = "$ " + (int)(displayedValue);
     }
 }

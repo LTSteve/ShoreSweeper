@@ -15,7 +15,7 @@ public class MinimapView : MonoBehaviour
         Monitored.Add(toMonitor, null);
     }
 
-    public Image DotPrefab;
+    public Image[] DotPrefabs;
     public Transform Panel;
 
     public bool doOpen;
@@ -25,16 +25,10 @@ public class MinimapView : MonoBehaviour
     private bool open;
 
     private PlayerController player;
-    private Color[] stateColorMap = new Color[]
-    {
-        Color.grey,
-        Color.yellow,
-        Color.magenta
-    };
 
     public void Start()
     {
-        startingPos = transform.parent.position;
+        startingPos = transform.parent.localPosition;
 
         ToggleOpen();
     }
@@ -57,7 +51,10 @@ public class MinimapView : MonoBehaviour
         {
             if (key == null || Monitored[key] != null) continue;
 
-            Monitored[key] = Instantiate(DotPrefab, Panel);
+            var zonestate = key.zoneData.cleared ? 2 :
+                (key.Honked ? 1 : 0);
+
+            Monitored[key] = Instantiate(DotPrefabs[zonestate], Panel);
         }
 
         if (!Camera.main)
@@ -80,12 +77,17 @@ public class MinimapView : MonoBehaviour
                 continue;
             }
 
-            dot.transform.localPosition = (zone.transform.position + zone.IslandCenterOffset - center) * (20f/(Mathf.Pow(range, 1.5f)));
-
             var zonestate = zone.zoneData.cleared ? 2 :
                 (zone.Honked ? 1 : 0);
 
-            dot.color = stateColorMap[zonestate];
+            if(dot.sprite != DotPrefabs[zonestate].sprite)
+            {
+                Destroy(dot.gameObject);
+                Monitored[zone] = dot = Instantiate(DotPrefabs[zonestate], Panel);
+            }
+
+            dot.transform.localPosition = (zone.transform.position + zone.IslandCenterOffset - center) * (20f/(Mathf.Pow(range, 1.5f)));
+
         }
     }
 
@@ -111,11 +113,11 @@ public class MinimapView : MonoBehaviour
 
             if (open)
             {
-                transform.parent.position = Vector3.Lerp(startingPos, zero, 1f - (timer / 0.2f));
+                transform.parent.localPosition = Vector3.Lerp(startingPos, zero, 1f - (timer / 0.2f));
             }
             else
             {
-                transform.parent.position = Vector3.Lerp(zero, startingPos, 1f - (timer / 0.2f));
+                transform.parent.localPosition = Vector3.Lerp(zero, startingPos, 1f - (timer / 0.2f));
             }
 
             timer -= Time.deltaTime;
@@ -125,11 +127,11 @@ public class MinimapView : MonoBehaviour
 
         if (open)
         {
-            transform.parent.position = zero;
+            transform.parent.localPosition = zero;
         }
         else
         {
-            transform.parent.position = startingPos;
+            transform.parent.localPosition = startingPos;
         }
 
         opening = false;
