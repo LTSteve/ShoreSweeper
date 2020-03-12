@@ -12,6 +12,7 @@ public class ProceduralGenerator : MonoBehaviour {
     public Tile GapPrefab;
     public GameObject NumberPrefab;
     public TreeBit TreePrefab;
+    public WreckBit WreckPrefab;
 
     public Sprite[] LandSprites;
     public Sprite[] NumberSprites;
@@ -63,6 +64,14 @@ public class ProceduralGenerator : MonoBehaviour {
         IslandCenterOffset = new Vector3((coordinates.GetNumeral(11) - 5f) * 6f, (coordinates.GetNumeral(11) - 5f) * 6f);
 
         Type = coordinates.GetNumeral();
+
+        var hasWreck = coordinates.GetNumeral(2) == 0;
+
+        var wreckTileType = coordinates.GetNumeral(8);
+        if(wreckTileType >= 4)
+        {
+            wreckTileType++;
+        }
 
         var availableSpots = new List<int>(400);
         for (var i = 0; i < 400; i++)
@@ -124,6 +133,8 @@ public class ProceduralGenerator : MonoBehaviour {
             availableSpots.Add(i);
         }
 
+        var wreckSpots = new List<int>();
+
         //plop down land & numbers
         for (var i = 0; i < 400; i++)
         {
@@ -184,12 +195,34 @@ public class ProceduralGenerator : MonoBehaviour {
                 tileType = 7;
             }
 
+            if(hasWreck && tileType == wreckTileType)
+            {
+                wreckSpots.Add(i);
+            }
+
             _spawnLand((i / 20) - 10, (i % 20) - 10, tileType, adjacent - 1, data.IsCleared(i), completelyCleared);
 
             if (treeSpots.Contains(i))
             {
                 _spawnTree((i / 20) - 10, (i % 20) - 10, completelyCleared);
             }
+        }
+
+        //spawnWrecks
+        if(hasWreck && wreckSpots.Count > 0)
+        {
+            //shuffle
+            for(var i = 0; i < wreckSpots.Count; i++)
+            {
+                var spotChosen = coordinates.GetNumeral(wreckSpots.Count);
+                var temp = wreckSpots[i];
+                wreckSpots[i] = wreckSpots[spotChosen];
+                wreckSpots[spotChosen] = temp;
+            }
+            
+            var loc = wreckSpots[0];
+
+            _spawnWreck((loc / 20) - 10, (loc % 20) - 10, completelyCleared);
         }
     }
 
@@ -287,6 +320,22 @@ public class ProceduralGenerator : MonoBehaviour {
     private void _spawnTree(int x, int y, bool cleared = false)
     {
         var spawned = Instantiate(TreePrefab, new Vector3(x, y) + LandRoot.position + IslandCenterOffset + new Vector3(0, 0, -15f), Quaternion.identity, LandRoot);
+
+        spawned.SetParent(this);
+
+        if (cleared)
+        {
+            spawned.Show();
+        }
+
+        spawned.location = (x + 10) * 20 + y + 10;
+
+        bits.Add(spawned);
+    }
+
+    private void _spawnWreck(int x, int y, bool cleared = false)
+    {
+        var spawned = Instantiate(WreckPrefab, new Vector3(x, y) + LandRoot.position + IslandCenterOffset + new Vector3(0, 0, -15f), Quaternion.identity, LandRoot);
 
         spawned.SetParent(this);
 

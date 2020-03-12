@@ -10,7 +10,9 @@ public class IslandBit : MonoBehaviour
     public ProceduralGenerator Parent;
 
     public Transform Pop;
-    
+
+    public Animator myAnimator;
+
     public void SetParent(ProceduralGenerator parent)
     {
         Parent = parent;
@@ -18,7 +20,18 @@ public class IslandBit : MonoBehaviour
 
     public virtual void Show()
     {
+        if (Shown)
+        {
+            return;
+        }
+
         Shown = true;
-        return;
+
+        myAnimator.enabled = true;
+    }
+
+    public void Spawned()
+    {
+        Instantiate(Pop, transform.position, Quaternion.identity);
     }
 }

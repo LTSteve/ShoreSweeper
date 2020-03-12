@@ -4,22 +4,8 @@ using UnityEngine;
 
 public class TreeBit : IslandBit
 {
-    public Animator myAnimator;
-
     private float countdown;
     private bool countingDown = false;
-
-    public override void Show()
-    {
-        if (Shown)
-        {
-            return;
-        }
-
-        base.Show();
-
-        myAnimator.enabled = true;
-    }
 
     private void Update()
     {
@@ -36,9 +22,9 @@ public class TreeBit : IslandBit
         countdown -= Time.deltaTime;
     }
 
-    public void TreeSpawned()
+    public new void Spawned()
     {
-        Instantiate(Pop, transform.position, Quaternion.identity);
+        base.Spawned();
 
         countdown = Numberizer.GetDisplayNumbers().GetNumeral(100) * 0.01f + 0.01f;
         countingDown = true;
