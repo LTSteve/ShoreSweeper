@@ -4,4 +4,5 @@ public class SailData
     public float speed;
     public float cost;
     public int[][] shipMastBannedMap;
+    public string name;
 }

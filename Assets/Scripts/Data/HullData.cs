@@ -7,4 +7,5 @@ public class HullData
     public int mastCount;
     public int[] defaultSails;
     public float[] wakeOffset;
+    public string name;
 }

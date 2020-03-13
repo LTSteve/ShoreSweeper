@@ -258,15 +258,17 @@ public class Director : MonoBehaviour {
                 var newZoneCoords = Coordinates.GetNeighbor(i, j);
 
                 var zoneData = worldData.ContainsKey(newZoneCoords.seed) ? worldData[newZoneCoords.seed] : null;
+                var newZone = false;
                 if(zoneData == null)
                 {
                     zoneData = new ZoneData(newZoneCoords.seed);
                     worldData[newZoneCoords.seed] = zoneData;
+                    newZone = true;
                 }
 
                 ActiveZones[i, j] = Instantiate(ZonePrefab, new Vector3((i - 2) * 120 + Center.x, (j - 2) * 120 + Center.y), Quaternion.identity, transform);
 
-                StartCoroutine(ActiveZones[i, j].Activate(Coordinates.GetNeighbor(i, j), zoneData));
+                StartCoroutine(ActiveZones[i, j].Activate(Coordinates.GetNeighbor(i, j), zoneData, newZone && i == 2 && j == 2));
 
                 MinimapView.AddMonitored(ActiveZones[i, j]);
                 yield return null;

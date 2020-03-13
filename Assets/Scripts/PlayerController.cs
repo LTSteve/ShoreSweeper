@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour {
     public int hull = 0;
     public int[] sails = { 0 };
 
+    public VendorBit CurrentInteraction = null;
+    public Transform ActiveInteraction = null;
+    public Transform InteractionPrefab;
+
     private static Vector3[] HorizEulers =  {
         Vector3.zero, //right
         new Vector3(0, 0, 90), //up
@@ -119,6 +123,11 @@ public class PlayerController : MonoBehaviour {
         }
 
         Waker.rotation = Quaternion.Euler(rot);
+
+        if(CurrentInteraction != null && Input.GetKeyDown(KeyCode.E))
+        {
+            CurrentInteraction.OpenInteraction();
+        }
     }
 
     private void _raycastActivate(bool right = false)
@@ -170,6 +179,28 @@ public class PlayerController : MonoBehaviour {
     public float GetVelocity()
     {
         return myBody.velocity.magnitude;
+    }
+
+    public void AddInteraction(VendorBit vendorBit)
+    {
+        if(ActiveInteraction != null)
+        {
+            Destroy(ActiveInteraction.gameObject);
+        }
+
+        CurrentInteraction = vendorBit;
+        ActiveInteraction = Instantiate(InteractionPrefab, transform);
+    }
+
+    public void RemoveInteraction(VendorBit vendorBit)
+    {
+        if (ActiveInteraction != null)
+        {
+            Destroy(ActiveInteraction.gameObject);
+        }
+
+        CurrentInteraction = null;
+        ActiveInteraction = null;
     }
 
     private void _reloadShip()

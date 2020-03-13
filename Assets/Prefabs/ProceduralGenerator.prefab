@@ -58,6 +58,7 @@ MonoBehaviour:
     type: 3}
   WreckPrefab: {fileID: 1505524944389436954, guid: 8edab9b508529b944938821177410355,
     type: 3}
+  VendorPrefab: {fileID: 1172600714, guid: 6e30e7f9986f1494a882f2a71e5f48f6, type: 3}
   LandSprites:
   - {fileID: 21300008, guid: 21ba3c0396ae01245bf6054250fa1c0d, type: 3}
   - {fileID: 21300010, guid: 21ba3c0396ae01245bf6054250fa1c0d, type: 3}

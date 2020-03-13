@@ -13,6 +13,7 @@ public class ProceduralGenerator : MonoBehaviour {
     public GameObject NumberPrefab;
     public TreeBit TreePrefab;
     public WreckBit WreckPrefab;
+    public VendorBit VendorPrefab;
 
     public Sprite[] LandSprites;
     public Sprite[] NumberSprites;
@@ -51,7 +52,7 @@ public class ProceduralGenerator : MonoBehaviour {
         }
     }
 
-    public IEnumerator Activate(Numberizer coordinates, ZoneData data)
+    public IEnumerator Activate(Numberizer coordinates, ZoneData data, bool rootZone = false)
     {
         zoneData = data;
         var completelyCleared = data.cleared;
@@ -67,10 +68,19 @@ public class ProceduralGenerator : MonoBehaviour {
 
         var hasWreck = coordinates.GetNumeral(2) == 0;
 
+        var hasVendor = true;// rootZone ? true : coordinates.GetNumeral(4) == 0;
+
         var wreckTileType = coordinates.GetNumeral(8);
-        if(wreckTileType >= 4)
+
+        var vendorTileType = ((wreckTileType + 1) % 8);
+        if (wreckTileType >= 4)
         {
             wreckTileType++;
+        }
+
+        if(vendorTileType >= 4)
+        {
+            vendorTileType++;
         }
 
         var availableSpots = new List<int>(400);
@@ -135,6 +145,8 @@ public class ProceduralGenerator : MonoBehaviour {
 
         var wreckSpots = new List<int>();
 
+        var vendorSpots = new List<int>();
+
         //plop down land & numbers
         for (var i = 0; i < 400; i++)
         {
@@ -195,9 +207,14 @@ public class ProceduralGenerator : MonoBehaviour {
                 tileType = 7;
             }
 
-            if(hasWreck && tileType == wreckTileType)
+            if(tileType == wreckTileType)
             {
                 wreckSpots.Add(i);
+            }
+
+            if(tileType == vendorTileType)
+            {
+                vendorSpots.Add(i);
             }
 
             _spawnLand((i / 20) - 10, (i % 20) - 10, tileType, adjacent - 1, data.IsCleared(i), completelyCleared);
@@ -208,8 +225,10 @@ public class ProceduralGenerator : MonoBehaviour {
             }
         }
 
+        yield return null; //break
+
         //spawnWrecks
-        if(hasWreck && wreckSpots.Count > 0)
+        if (hasWreck && wreckSpots.Count > 0)
         {
             //shuffle
             for(var i = 0; i < wreckSpots.Count; i++)
@@ -223,6 +242,24 @@ public class ProceduralGenerator : MonoBehaviour {
             var loc = wreckSpots[0];
 
             _spawnWreck((loc / 20) - 10, (loc % 20) - 10, completelyCleared);
+        }
+
+        //spawnVendors
+        
+        if (hasVendor && vendorSpots.Count > 0)
+        {
+            //shuffle
+            for (var i = 0; i < vendorSpots.Count; i++)
+            {
+                var spotChosen = coordinates.GetNumeral(vendorSpots.Count);
+                var temp = vendorSpots[i];
+                vendorSpots[i] = vendorSpots[spotChosen];
+                vendorSpots[spotChosen] = temp;
+            }
+
+            var loc = vendorSpots[0];
+
+            _spawnVendor((loc / 20) - 10, (loc % 20) - 10, completelyCleared, rootZone ? 0 : (CurrentDifficulty - 1));
         }
     }
 
@@ -338,6 +375,23 @@ public class ProceduralGenerator : MonoBehaviour {
         var spawned = Instantiate(WreckPrefab, new Vector3(x, y) + LandRoot.position + IslandCenterOffset + new Vector3(0, 0, -15f), Quaternion.identity, LandRoot);
 
         spawned.SetParent(this);
+
+        if (cleared)
+        {
+            spawned.Show();
+        }
+
+        spawned.location = (x + 10) * 20 + y + 10;
+
+        bits.Add(spawned);
+    }
+
+    private void _spawnVendor(int x, int y, bool cleared = false, int level = 0)
+    {
+        var spawned = Instantiate(VendorPrefab, new Vector3(x, y) + LandRoot.position + IslandCenterOffset + new Vector3(0, 0, -15f), Quaternion.identity, LandRoot);
+
+        spawned.SetParent(this);
+        spawned.Level = level;
 
         if (cleared)
         {

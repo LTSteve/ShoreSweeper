@@ -15,7 +15,7 @@ public static class RaycastUtil
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         }
 
-        var hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+        var hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, LayerMask.GetMask(new string[] { "Default" }));
         if (hit.collider != null)
         {
             return hit.collider.transform.gameObject.GetComponent<Tile>();

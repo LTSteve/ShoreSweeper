@@ -12,7 +12,8 @@
         -0.25,
         -0.15,
         0
-      ]
+      ],
+      "name": "Raft"
     },
     {
       "cost": 1000,
@@ -26,7 +27,8 @@
         -0.25,
         -0.15,
         0
-      ]
+      ],
+      "name": "Gundalow"
     },
     {
       "cost": 5000,
@@ -40,7 +42,8 @@
         -0.25,
         -1.05,
         0
-      ]
+      ],
+      "name": "Karve"
     },
     {
       "cost": 20000,
@@ -55,7 +58,8 @@
         -0.6,
         -2,
         0
-      ]
+      ],
+      "name": "Schooner"
     },
     {
       "cost": 100000,
@@ -71,24 +75,28 @@
         -1.5,
         -1,
         0
-      ]
+      ],
+      "name": "Caravel"
     }
   ],
   "sail": [
     {
       "cost": 100,
       "speed": 1.5,
-      "shipMastBannedMap": []
+      "shipMastBannedMap": [],
+      "name": "Rag"
     },
     {
       "cost": 1500,
       "speed": 2.5,
-      "shipMastBannedMap": []
+      "shipMastBannedMap": [],
+      "name": "Mainsail"
     },
     {
       "cost": 1500,
       "speed": 2,
-      "shipMastBannedMap": []
+      "shipMastBannedMap": [],
+      "name": "Small Topsail"
     },
     {
       "cost": 4500,
@@ -98,14 +106,16 @@
         [ 1, 0 ],
         [ 3, 1 ],
         [ 4, 0, 2 ]
-      ]
+      ],
+      "name": "Full Mast"
     },
     {
       "cost": 2500,
       "speed": 1,
       "shipMastBannedMap": [
         [ 0, 0 ]
-      ]
+      ],
+      "name": "Small Mainsail"
     },
     {
       "cost": 10000,
@@ -114,7 +124,8 @@
         [ 0, 0 ],
         [ 1, 0 ],
         [ 3, 1 ]
-      ]
+      ],
+      "name": "Mega Mast"
     }
   ]
 }
